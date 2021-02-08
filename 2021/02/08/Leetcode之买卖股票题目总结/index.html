@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="sxx的个人博客">
+  <meta name="author" content="suxiaoxin">
+  <meta name="keywords" content="">
+  <title>Leetcode之买卖股票题目总结 - xiaoxin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>xiaoxin</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/ocean.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Leetcode之买卖股票题目总结">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      suxiaoxin
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-08 22:56" pubdate>
+        2021年2月8日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Leetcode之买卖股票题目总结</h1>
+            
+            <div class="markdown-body">
+              <p>关于股票买卖的题目，都可以用动态规划来解决，我们要根据具体题目，分析不同的初始条件以及转移方程。在接下来的每一道题目中，我都会提供使用动态规划方法的解答，以及一些针对某道特定的题目，更为简单的解答思路。</p>
+<h2 id="买卖股票的最佳时机Ⅰ"><a href="#买卖股票的最佳时机Ⅰ" class="headerlink" title="买卖股票的最佳时机Ⅰ"></a>买卖股票的最佳时机Ⅰ</h2><p><img src="/2021/02/08/Leetcode%E4%B9%8B%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E9%A2%98%E7%9B%AE%E6%80%BB%E7%BB%93/1.png" srcset="/img/loading.gif" alt="题目描述"></p>
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><p>假设以dp[i]来表示第i天的最大利润，我们以dp[i][0]和dp[i][1]来分别代表今天结束时手上持有股票的状态和不持有状态的股票。<br>对于今天结束时持有股票的状态，有可能是昨天结束时已经持有了股票，今天没有进行任何操作，也有可能是今天以prices[i]的价格买入了股票。因此转移方程为<code>dp[i][0] = Math.max&#123;dp[i-1][0], -prices[i]&#125;</code>。<br>而如果今天结束时不持有股票，那么可能是昨天结束时已经不持有股票了，今天没有进行任何操作，也可能是昨天结束时持有股票，今天以prices[i]的价格卖出。那么转移方程为<code>dp[i][1] = Math.max&#123;dp[i-1][1], dp[i-1][0] + prices[i]&#125;</code>。<br>初始条件：第一天结束若是持有股票，则利润一定是-prices[i],即<code>dp[0][0] = -prices[i]</code>。第一天结束若不持有股票，一定是没有买也没有卖，即<code>dp[i][1] = 0</code>。<br>我们可以观察到，第i天的状态只与第i-1天的状态有关，因此我们想到了空间优化的措施，用两个变量存储前一天两种状态下的最大利润，避免创建二维数组：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> n = prices.length;<br>    <span class="hljs-keyword">let</span> buy = -prices[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">let</span> sell = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>;i&lt;n;i++)&#123;<br> 		<span class="hljs-keyword">let</span> s0 = buy, s1 = sell;<br>        buy = <span class="hljs-built_in">Math</span>.max(s0, -prices[i])<br>        sell = <span class="hljs-built_in">Math</span>.max(s1, s0 + prices[i])<br>    &#125;<br>    <span class="hljs-keyword">return</span> sell;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="计算最大的差值"><a href="#计算最大的差值" class="headerlink" title="计算最大的差值"></a>计算最大的差值</h3><p>对这道题来说，动态规划其实有点小题大做了。由于只能进行一次交易，我们只需要知道prices[j] - prices[i] (j&gt;i) 的最大值。用一个minPrice来维护最小买入价格，以profit来记录当前的最大利润，遍历一遍数组，比较得出当前的最大利润以及更新minPrice。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> minPrice = prices[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">let</span> profit = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i=<span class="hljs-number">1</span>; i&lt;prices.length;i++)&#123;<br>        <span class="hljs-keyword">if</span>(prices[i] &lt; minPrice)&#123;<br>            minPrice = prices[i]<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            profit = <span class="hljs-built_in">Math</span>.max(profit, prices[i] - minPrice)<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> profit;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="买卖股票的最佳时机Ⅱ"><a href="#买卖股票的最佳时机Ⅱ" class="headerlink" title="买卖股票的最佳时机Ⅱ"></a>买卖股票的最佳时机Ⅱ</h2><p><img src="/2021/02/08/Leetcode%E4%B9%8B%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E9%A2%98%E7%9B%AE%E6%80%BB%E7%BB%93/2.png" srcset="/img/loading.gif" alt="题目描述"></p>
+<h3 id="动态规划-1"><a href="#动态规划-1" class="headerlink" title="动态规划"></a>动态规划</h3><p>这道题和第一题的唯一区别是可以进行无限次的交易。如果今天结束的状态是持有股票，那么前一天有可能是完成了一次交易，卖掉了股票。因此dp[i][0]的转移方程就变成了<code>dp[i][0] = Math.max&#123;dp[i-1][0], dp[i-1][1] - prices[i]&#125;</code>（因为初始条件dp[i][1] = 0，所以如果是进行第一次交易，也不会影响结果）。<br>和上一题一样，我们也可以使用两个变量进行空间的优化。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> n = prices.length;<br>    <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> buy = -prices[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">let</span> sell = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)&#123;<br>        <span class="hljs-keyword">let</span> a = buy, b = sell;<br>        buy = <span class="hljs-built_in">Math</span>.max(a, b - prices[i]);<br>        sell = <span class="hljs-built_in">Math</span>.max(b, a + prices[i]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> sell;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h3><p>由于交易次数不限，我们可以这样想：加入今天的价格比明天低，那么我们就在今天买入，明天卖出，这也必能增加利润。如果价格连续几天都攀升，我们使用这种方法就相当于在价格最低点买入，最高点卖出。这样我们遍历一次数组就能得到最大利润。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> profit = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span>(prices.length == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span>(i &lt; prices.length)&#123;<br>        <span class="hljs-keyword">if</span>(prices[i] &gt; prices[i-<span class="hljs-number">1</span>])&#123;<br>            profit += prices[i] - prices[i-<span class="hljs-number">1</span>]<br>        &#125;<br>        i++;<br>    &#125;<br>    <span class="hljs-keyword">return</span> profit;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="买卖股票的最佳时机Ⅲ"><a href="#买卖股票的最佳时机Ⅲ" class="headerlink" title="买卖股票的最佳时机Ⅲ"></a>买卖股票的最佳时机Ⅲ</h2><p><img src="/2021/02/08/Leetcode%E4%B9%8B%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E9%A2%98%E7%9B%AE%E6%80%BB%E7%BB%93/3.png" srcset="/img/loading.gif" alt="题目描述"></p>
+<h3 id="动态规划1-0"><a href="#动态规划1-0" class="headerlink" title="动态规划1.0"></a>动态规划1.0</h3><p>在前面题目的基础上，这道题目加了一个限制，最多完成两笔交易，那么一天结束之后，我们可能有五种状态：</p>
+<ol>
+<li>没有过进行任何交易</li>
+<li>持有第一支股票（第一笔交易中）</li>
+<li>完成了第一次交易（买和卖），现在不持有股票</li>
+<li>持有第二支股票（第二笔交易中）</li>
+<li>完成第二次交易（买和卖），现在不持有股票<br>第一个状态，也是初始状态，利润一定为0，因此不必维护与更新。<br>我们用dp[i][0]、dp[i][1]、dp[i][2]、dp[i][3]分别表示第i天2-5状态下的最大利润。用-Infinity来表示不可能的状态(如果第一笔交易没完成或收益不为正，就不进行第二次交易)。那么<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">dp</span>[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = -prices[<span class="hljs-number">0</span>]<br><span class="hljs-attribute">dp</span>[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">0</span><br><span class="hljs-attribute">dp</span>[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>] = -Infinity<br><span class="hljs-attribute">dp</span>[<span class="hljs-number">0</span>][<span class="hljs-number">3</span>] = -Infinity<br></code></pre></td></tr></table></figure>
+接下来考虑每一天的转移方程：<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs inform7">// 第一笔交易的转移方程不必多说<br>dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[0]</span> = Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span>, -prices<span class="hljs-comment">[i]</span>)<br>dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[1]</span> = Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span>, dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span> + prices<span class="hljs-comment">[i]</span>);<br>// 如果前一天第一笔交易结束时收益不为正，说明第一笔交易没有意义也无效，不应该有第二次交易，<br>// 因此把最大利润设为-Infinity<br>// 如果前一天第一笔交易结束时收益大于0，今天结束的状态是持有第二支股票<br>// 那么有可能是延续了前一天的状态或是昨天卖出第一支股票，今天买入第二支股票<br>dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[2]</span> = dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span> &gt; 0 ? Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span> - prices<span class="hljs-comment">[i]</span>, dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span>) : -Infinity<br>// 如果前一天不可能买入第二天股票，那么今天也不可能售出<br>// 如果dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span>有效，那么有可能延续昨天的状态或是在昨天买入的基础上卖出股票<br>dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[3]</span> = dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span> != -Infinity ? Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[3]</span>, dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span> + prices<span class="hljs-comment">[i]</span>) : -Infinity<br></code></pre></td></tr></table></figure>
+最后返回最大利润，有可能没有进行交易、进行一次交易、或进行了两次交易。因此返回这三个的最大值就可以了，也就是<code>Math.max(0, dp[prices.length-1][1], dp[prices.length-1][3])</code><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs inform7">var maxProfit = function(prices) &#123;<br>    let n = prices.length;<br>    if(n == 0) return 0;<br>    let dp = <span class="hljs-comment">[]</span>;<br>    dp<span class="hljs-comment">[0]</span> = <span class="hljs-comment">[]</span>;<br>    dp<span class="hljs-comment">[0]</span><span class="hljs-comment">[0]</span> = -prices<span class="hljs-comment">[0]</span>; <br>    dp<span class="hljs-comment">[0]</span><span class="hljs-comment">[1]</span> = 0;<br>    dp<span class="hljs-comment">[0]</span><span class="hljs-comment">[2]</span> = -Infinity; dp<span class="hljs-comment">[0]</span><span class="hljs-comment">[3]</span> = -Infinity;<br>    for(let i = 1; i &lt; n; i++)&#123;<br>        dp<span class="hljs-comment">[i]</span> = <span class="hljs-comment">[]</span>;<br>        dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[0]</span> = Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span>, -prices<span class="hljs-comment">[i]</span>)<br>        dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[1]</span> = Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span>, dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span> + prices<span class="hljs-comment">[i]</span>);<br>        dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[2]</span> = dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span> &gt; 0 ? Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span> - prices<span class="hljs-comment">[i]</span>, dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span>) : -Infinity<br>        dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[3]</span> = dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span> != -Infinity ? Math.max(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[3]</span>, dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[2]</span> + prices<span class="hljs-comment">[i]</span>) : -Infinity<br>    &#125;<br>    return Math.max(0, dp<span class="hljs-comment">[n-1]</span><span class="hljs-comment">[3]</span>, dp<span class="hljs-comment">[n-1]</span><span class="hljs-comment">[1]</span>)<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="动态规划2-0"><a href="#动态规划2-0" class="headerlink" title="动态规划2.0"></a>动态规划2.0</h3>无论题目是否允许同一天买入并卖出，最终答案都不会受到影响，因为这一操作的收益为0。<br>在这一思想基础上，我们考虑对动态规划作优化。<br>我们用<strong>buy1、sell1、buy2、sell2</strong>分别代表2-4状态的最大利润。<br>边界条件（第一天结束时）：<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">buy1</span> = -prices[<span class="hljs-number">0</span>] <br><span class="hljs-attr">sell1</span> = <span class="hljs-number">0</span> <br><span class="hljs-attr">buy2</span> = -prices[<span class="hljs-number">0</span>] <br><span class="hljs-attr">sell2</span> = <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+接下来考虑转移方程，<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">buy1</span> = Math.max&#123;buy1, -prices[i]&#125;<br><span class="hljs-attr">sell1</span> = Math.max&#123;sell1, buy1 + prices[i]&#125;<br><span class="hljs-attr">buy2</span> = Math.max&#123;buy2, sell1 - prices[i]&#125;<br><span class="hljs-attr">sell2</span> = Math.max&#123;sell2, buy2 + prices[i]&#125;<br></code></pre></td></tr></table></figure>
+有了前面题目的铺垫，得到这个转移方程并不难，只是这次我们没有用临时变量存储前一天的最大利润，而是直接计算。这样做会对结果有影响吗？答案是不会。比如在计算第i天的sell1的时候，我们用到的变量是第i天的buy1，它多考虑了第i天买入股票的情况，而这对计算sell1（第i天卖出股票）不会有任何影响，因为第i天买入又在第i天卖出，利润为0，对答案不会有影响。同理，计算buy2和sell2时，也可以直接用当天的值来算。<br>最后返回最大利润，必然是sell1、sell2和0之中的最大值，由于sell1和sell2的初始状态就是0，所以不用额外和0作比较。如果最后最好的情况是只进行一次交易，由于我们允许了同一天买和卖，sell1和sell2其实是相等的，因此最终返回的最大利润其实就是sell2。<br>这样，我们就得到了解答：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">prices</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> n = prices.length;<br>    <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> buy1 = -prices[<span class="hljs-number">0</span>], sell1 = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> buy2 = -prices[<span class="hljs-number">0</span>], sell2 = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)&#123;<br>        buy1 = <span class="hljs-built_in">Math</span>.max(buy1, -prices[i]);<br>        sell1 = <span class="hljs-built_in">Math</span>.max(sell1, buy1 + prices[i]);<br>        buy2 = <span class="hljs-built_in">Math</span>.max(buy2, sell1 - prices[i]);<br>        sell2 = <span class="hljs-built_in">Math</span>.max(sell2, buy2 + prices[i]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> sell2;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="买卖股票的最佳时机Ⅳ"><a href="#买卖股票的最佳时机Ⅳ" class="headerlink" title="买卖股票的最佳时机Ⅳ"></a>买卖股票的最佳时机Ⅳ</h2><img src="/2021/02/08/Leetcode%E4%B9%8B%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E9%A2%98%E7%9B%AE%E6%80%BB%E7%BB%93/4.png" srcset="/img/loading.gif" alt="题目描述"><br>上一题最多允许2次交易，我们用4的变量来记录不同状态的最大利润。这道题目最大能进行k次交易，那么就一共会有2k个状态，因此，我们可以考虑用两个数量为k的数组表示第k次交易买和卖情况下的最大利润。初始状态和转移方程和上一题差不多。直接上代码：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> maxProfit = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">k, prices</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> n = prices.length;<br>    <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">//分别用一个数组记录第k次买入或卖出状态的最大利润</span><br>    <span class="hljs-comment">//初始状态：buy[1] = ... = buy[k] = -prices[0] sell[1] = ... = sell[k] = 0</span><br>    <span class="hljs-comment">//假设允许当天即买即卖，那样子利润为0，对结果不会有影响</span><br>    <span class="hljs-keyword">let</span> buy = [], sell = [];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt;= k; i++)&#123;<br>        buy[i] = -prices[<span class="hljs-number">0</span>];<br>        sell[i] = <span class="hljs-number">0</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> d = <span class="hljs-number">1</span>; d &lt; n; d++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">1</span>; i &lt;= k; i++)&#123;<br>            buy[i] = <span class="hljs-built_in">Math</span>.max(buy[i], sell[i-<span class="hljs-number">1</span>] - prices[d])<br>            sell[i] = <span class="hljs-built_in">Math</span>.max(sell[i], buy[i] + prices[d])<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> sell[k];<br>&#125;;<br></code></pre></td></tr></table></figure>
+到这，我们就由易而难的解决了买卖股票的最佳时机四道题。他们都可以用动态规划解决，只是我们要根据具体的题目条件确定边界值和转移方程。</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Leetcode/">Leetcode</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8/">买卖股票</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/08/better-scroll%E7%9A%84%E8%B8%A9%E5%9D%91%E6%80%BB%E7%BB%93/">
+                        <span class="hidden-mobile">better-scroll的踩坑总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Soxiaoxin/comment-utterance');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
