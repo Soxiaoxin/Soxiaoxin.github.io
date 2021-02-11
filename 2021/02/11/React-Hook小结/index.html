@@ -1,0 +1,543 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="sxx的个人博客">
+  <meta name="author" content="suxiaoxin">
+  <meta name="keywords" content="">
+  <title>React Hook小结 - xiaoxin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>xiaoxin</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/ocean.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="React Hook小结">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      suxiaoxin
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-02-11 16:07" pubdate>
+        2021年2月11日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React Hook小结</h1>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>Hook是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。</p>
+</blockquote>
+<h2 id="使用Hook的动机"><a href="#使用Hook的动机" class="headerlink" title="使用Hook的动机"></a>使用Hook的动机</h2><ol>
+<li><p><strong>Hook 使你在无需修改组件结构的情况下复用状态逻辑</strong>。在Hook之前，我们可以使用render props和高阶组件来添加可复用的状态逻辑。</p>
+<p><strong>render props</strong>就是在react组件之间使用一个值为函数的prop共享代码技术，组件接收一个返回React元素的函数，并在组件内部调用这个函数完成渲染逻辑。（这个prop的名字叫render或其他名字），而且也不一定要放到JSX元素的attribute列表中，也可以放在元素标签内部。</p>
+<p><strong>高阶组件</strong>（Higher Order Component）是参数为组件，返回值为新组件的函数。HOC将组件包装在容器组件中来组成新的组件，来完成一些可复用的逻辑。</p>
+<p>但这两个方案需要重新组织组件的结构，可能使代码难以理解。使用Hook可以从组件中提取状态逻辑，使这些逻辑可以单独测试且复用，并无需修改组件结构。</p>
+</li>
+<li><p>我们维护组件时，随着时间推移，组建的生命周期函数往往变得臃肿，会有很多不相关的状态逻辑。<strong>Hook 将组件中相互关联的部分拆分成更小的函数（比如设置订阅或请求数据）</strong>，而并非强制按照生命周期划分。</p>
+</li>
+<li><p><strong>Hook 使你在非 class 的情况下可以使用更多的 React 特性</strong>。无需理解class</p>
+</li>
+</ol>
+<h2 id="Hook的特性"><a href="#Hook的特性" class="headerlink" title="Hook的特性"></a>Hook的特性</h2><p>Hook是钩子的意思，就是我们使用函数式组件时，尽量写成纯函数，如果需要React state和生命周期等特性的函数，就使用Hook完成这些原本在class中才能实现的需求。Hook是</p>
+<ul>
+<li>完全可选的</li>
+<li>100%向后兼容</li>
+<li>现在可用</li>
+<li>没有计划从React中移除class</li>
+</ul>
+<h2 id="Hook使用规则"><a href="#Hook使用规则" class="headerlink" title="Hook使用规则"></a>Hook使用规则</h2><ul>
+<li>只能在函数最外层调用Hook，不要再循环、条件判断或子函数中调用。</li>
+</ul>
+<p>React怎么知道哪个state对应哪个useState，答案是靠Hook执行的顺序，如果我们在条件语句中使用hook，那么很有可能导致前后两次hooks执行顺序发生改变，导致bug产生。如果我们想要有条件地执行一个 effect，可以将判断放到 Hook 的内部。</p>
+<ul>
+<li>只能在React的函数式组件中调用，不要在其他JavaScript函数中调用。</li>
+</ul>
+<h2 id="React中几种常见的Hook"><a href="#React中几种常见的Hook" class="headerlink" title="React中几种常见的Hook"></a>React中几种常见的Hook</h2><h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a><strong>useState</strong></h3><p>相当于类组件中的state。</p>
+<p>当我们调用useState时，我们传入一个参数，作为这个state的初始值，它返回一个有两个元素的数组，分别代表当前state的值以及更新这个state的函数，比如<code>[count, setCount] = useState(0)</code>，通过数组解构，我们得到两个变量，count是这个state的变量名，我们可以调用setCount更新count这个state。</p>
+<p>使用useState时，应该使用单个state变量还是使用一个对象打包所有state？</p>
+<p>React官方推荐把 state 切分成多个 state 变量，因为每次更新一个state，会用新值整个替换旧值，不像class组件的setState那样合并。因此如果非要用一个对象包含所有state，state的更新要这样实现：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pf"><span class="hljs-keyword">const</span> [<span class="hljs-keyword">state</span>, <span class="hljs-built_in">set</span>State] = useState(&#123; left: <span class="hljs-number">0</span>, top: <span class="hljs-number">0</span>, width: <span class="hljs-number">100</span>, height: <span class="hljs-number">100</span> &#125;);<br>...<br>/ 展开 「...<span class="hljs-keyword">state</span>」 以确保我们没有 「丢失」 width 和 height<br>     <span class="hljs-built_in">set</span>State(<span class="hljs-keyword">state</span> =&gt; (&#123; ...<span class="hljs-keyword">state</span>, left: e.pageX, top: e.pageY &#125;));<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a><strong>useEffect</strong></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">useEffect(<span class="hljs-function">() =&gt;</span> &#123;...&#125;, []);<br></code></pre></td></tr></table></figure>
+<p>数据获取，设置订阅以及手动更改 React 组件中的 DOM 都属于副作用。我们可以使用useEffect完成在函数式组件中这些功能。</p>
+<p>清除操作：只需在返回值中返回一个函数，那么React会在组件卸载的时候执行清除操作并调用它，比如取消订阅。</p>
+<p>默认情况下，useEffect会在每次渲染后执行，如果要通知React跳过对effect的调用，即不要每次渲染都调用，我们可以传递数组作为第二个参数，比如我们传入[count]作为第二个参数，那么只有当count发生改变时，这个副作用函数才会被执行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//相当于componentDidMount和componentWillUnmount</span><br>useEffect(<span class="hljs-function">() =&gt;</span> &#123;...&#125;, [])<br><span class="hljs-comment">//会紧紧盯着count，只要count值改变，就会执行</span><br>useEffect(<span class="hljs-function">() =&gt;</span> &#123;...&#125;, [count])<br><span class="hljs-comment">//默认情况，相当于componentDidMount和componentDidUpdate</span><br>useEffect(<span class="hljs-function">() =&gt;</span> &#123;...&#125;)<br></code></pre></td></tr></table></figure>
+<h3 id="useContext"><a href="#useContext" class="headerlink" title="useContext"></a><strong>useContext</strong></h3><p>在组件之间共享状态的钩子。在React中，如果我们要传递变量，可以使用props属性向下传递给子组件。这种方法很简单，但当我们想把变量传递给子组件的子组件时，就需要使用子组件的props再往下传递，这样就形成了props的深度注入。随着props注入越深，组件更新的频率也越来越高，UI效率也就越来越慢。</p>
+<p>而useContext就是来解决非父子组件的数据共享问题的。</p>
+<p>假设说我们需要全局共享一个变量，username。</p>
+<p>第一步，我们要利用React Context API，在组件外部创建一个context，并传入默认初始值。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">const</span> defaultContextValue = &#123; <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;sxx&#x27;</span> &#125;;<br><span class="hljs-keyword">const</span> appContext = React.createContext(defaultContextValue)<br></code></pre></td></tr></table></figure>
+<p>然后，为了使App组件和其子组件能共享这个username，我们要用appContext.Provider把整个render函数包裹起来。并且要把defaultContextValue注入到value属性中。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs typescript">&lt;appContext.Provider value=&#123;defaultContextValue&#125;&gt;<br>  &lt;App /&gt;<br>&lt;/appContext.Provider&gt;<br></code></pre></td></tr></table></figure>
+<p>接下来，我们就可以在他的子孙组件中访问到username这个变量了。</p>
+<p>有两种方法：</p>
+<ol>
+<li>利用appContext.Consumer组件，在组件内部使用花括号，使用箭头函数在其内部共享数据：</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; appContext &#125; <span class="hljs-keyword">from</span> ...<br>...<br>  &lt;appContext.Consumer&gt;<br>  &#123;<span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> &#123;<br>    &#123;<span class="hljs-comment">/*在这里可以访问到全局的username啦*/</span>&#125;<br>    &lt;h1&gt;&#123;value.username&#125;&lt;/h1&gt;<br>  &#125;&#125;<br>&lt;/appContext.Consumer&gt;<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用React Hook。利用useContext钩子函数，我们不用改变代码的结构，能很方便的在组件中获取数据：</li>
+</ol>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">import</span> &#123; useContext &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">const</span> value = useContext(appContext);<br><span class="hljs-comment">//接着就可以在return中直接使用value了</span><br></code></pre></td></tr></table></figure>
+<p>useContext这个hook极大的减少了模板代码，降低了代码层级，也消灭了多个consumer嵌套的可能性。</p>
+<h3 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a><strong>useReducer</strong></h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">const</span> [state, dispatch] = useReducer(reducer, initialState);<br></code></pre></td></tr></table></figure>
+<p>这个钩子接收一个reducer和initialState为参数，返回当前状态和dispatch action的函数，可以在不使用redux的情况下，管理数据状态。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">const</span> myReducer = <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">switch</span>(action.type)  &#123;<br>    <span class="hljs-keyword">case</span>(<span class="hljs-string">&#x27;countUp&#x27;</span>):<br>      <span class="hljs-keyword">return</span>  &#123;<br>        ...state,<br>        count: state.count + <span class="hljs-number">1</span><br>      &#125;<br>    <span class="hljs-keyword">default</span>:<br>      <span class="hljs-keyword">return</span>  state;<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//组件代码</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> [state, dispatch] = useReducer(myReducer, &#123; <span class="hljs-attr">count</span>:   <span class="hljs-number">0</span> &#125;);<br>  <span class="hljs-keyword">return</span>  (<br>    &lt;div className=<span class="hljs-string">&quot;App&quot;</span>&gt;<br>      &lt;button onClick=&#123;<span class="hljs-function">() =&gt;</span> dispatch(&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;countUp&#x27;</span> &#125;)&#125;&gt;<br>        +<span class="hljs-number">1</span><br>      &lt;/button&gt;<br>      &lt;p&gt;Count: &#123;state.count&#125;&lt;/p&gt;<br>    &lt;/div&gt;<br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="自定义Hook"><a href="#自定义Hook" class="headerlink" title="自定义Hook"></a><strong>自定义Hook</strong></h3><p>自定义 Hook 的命名以use开头，不需要具有特殊的标识。我们可以自由的决定它的参数是什么，以及它应该返回什么（如果需要的话）。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Hook/">Hook</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/02/08/Leetcode%E4%B9%8B%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E9%A2%98%E7%9B%AE%E6%80%BB%E7%BB%93/">
+                        <span class="hidden-mobile">Leetcode之买卖股票题目总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Soxiaoxin/comment-utterance');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
