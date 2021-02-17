@@ -17,7 +17,7 @@
   <meta name="description" content="sxx的个人博客">
   <meta name="author" content="suxiaoxin">
   <meta name="keywords" content="">
-  <title>关于react-router - xiaoxin</title>
+  <title>React Redux - xiaoxin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -162,7 +162,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="关于react-router">
+            <span class="h2" id="subtitle" title="React Redux">
               
             </span>
 
@@ -177,8 +177,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-02-16 15:42" pubdate>
-        2021年2月16日 下午
+      <time datetime="2021-02-17 22:19" pubdate>
+        2021年2月17日 晚上
       </time>
     </span>
   
@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      968 字
+      1.3k 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      12
+      15
        分钟
     </span>
   
@@ -237,49 +237,75 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">关于react-router</h1>
+            <h1 style="display: none">React Redux</h1>
             
             <div class="markdown-body">
-              <h2 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs react">React.render((<br>  &lt;Router&gt;<br>    &lt;Route path&#x3D;&quot;&#x2F;&quot; component&#x3D;&#123;App&#125;&gt;<br>      &lt;Route path&#x3D;&quot;about&quot; component&#x3D;&#123;About&#125; &#x2F;&gt;<br>      &lt;Route path&#x3D;&quot;inbox&quot; component&#x3D;&#123;Inbox&#125;&gt;<br>        &lt;Route path&#x3D;&quot;messages&#x2F;:id&quot; component&#x3D;&#123;Message&#125; &#x2F;&gt;<br>      &lt;&#x2F;Route&gt;<br>    &lt;&#x2F;Route&gt;<br>  &lt;&#x2F;Router&gt;<br>), document.body)<br></code></pre></td></tr></table></figure>
-<p>通过path属性和component属性，可以配置url对应的路由。</p>
-<p>此时，当url为’/‘时，我们会渲染App组件，但这时this.props.children是undefined，这种情况下，我们可以使用IndexRoute设置默认页面。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs react">React.render((<br>  &lt;Router&gt;<br>    &lt;Route path&#x3D;&quot;&#x2F;&quot; component&#x3D;&#123;App&#125;&gt;<br>      &lt;IndexRoute component&#x3D;&#123;Dashboard&#125;&#x2F;&gt;<br>      &lt;Route path&#x3D;&quot;about&quot; component&#x3D;&#123;About&#125; &#x2F;&gt;<br>      &lt;Route path&#x3D;&quot;inbox&quot; component&#x3D;&#123;Inbox&#125;&gt;<br>        &lt;Route path&#x3D;&quot;messages&#x2F;:id&quot; component&#x3D;&#123;Message&#125; &#x2F;&gt;<br>        &#123;&#x2F;* 使用 &#x2F;messages&#x2F;:id 替换 messages&#x2F;:id *&#x2F;&#125;<br>        &#123;&#x2F;*&lt;Route path&#x3D;&quot;&#x2F;messages&#x2F;:id&quot; component&#x3D;&#123;Message&#125; &#x2F;&gt;*&#x2F;&#125;<br>        &#123;&#x2F;*&lt;Redirect from&#x3D;&quot;messages&#x2F;:id&quot; to&#x3D;&quot;&#x2F;messages&#x2F;:id&quot; &#x2F;&gt;*&#x2F;&#125;<br>      &lt;&#x2F;Route&gt;<br>    &lt;&#x2F;Route&gt;<br>  &lt;&#x2F;Router&gt;<br>), document.body)<br></code></pre></td></tr></table></figure>
-<p>如果我们想url为/message/:id也能正常访问，那么只需使用 /messages/:id 替换 messages/:id，但这样做会导致url被改变，当我们访问/inbox/message/:id时，会得到错误的页面。要解决这个问题，我们还要加一个Redirect标签。</p>
-<h2 id="Router中的history属性"><a href="#Router中的history属性" class="headerlink" title="Router中的history属性"></a>Router中的history属性</h2><p>history知道如何监听浏览器地址的变化，并解析这个url转化为location对象，然后router使用它匹配到路由，最后正确渲染组件。</p>
+              <h2 id="基本工作流程"><a href="#基本工作流程" class="headerlink" title="基本工作流程"></a>基本工作流程</h2><ol>
+<li>用户通过action creator创建action并派发dispatch action。</li>
+<li>store收到之后自动调用相应的reducer，传入当前的state和收到的action，返回新的state。</li>
+<li>state一旦发生变化，会调用监听函数，通知订阅了store的组件（store.subscribe(listener)）。</li>
+<li>Reacr component中可以通过store.getState()获取到store的状态。</li>
+</ol>
+<img src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016091802.jpg" srcset="/img/loading.gif" alt="flow" /> 
+
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>上述流程中，我们的reducer只能处理一些同步的、无副作用的action，那一步操作怎么办？像数据获取这些有副作用的操作怎么办？这时我们可以使用redux中的新工具——中间件（middleware）。</p>
+<p>所谓中间件，就是对原来的store.dispatch进行封装，在发出action和执行reducer之间添加一些操作。</p>
+<h4 id="中间件的用法"><a href="#中间件的用法" class="headerlink" title="中间件的用法"></a>中间件的用法</h4><p>我们既可以使用现有的中间件（redux-thunk、redux-logger等），也可以自定义中间件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs react">const middleWare &#x3D; (store) &#x3D;&gt; (next) &#x3D;&gt; (action) &#x3D;&gt; &#123;<br>	&#x2F;&#x2F;派发action之前进行一些操作<br>  ...<br>  &#x2F;&#x2F;dispatch这个action<br>	next(action)<br>  &#x2F;&#x2F;action执行后<br>	...<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>要使用中间件，只需在createStore的时候将applyMiddlewares(thunk, logger)参数传入即可。</p>
+<h2 id="异步操作的基本思路（使用redux-thunk）"><a href="#异步操作的基本思路（使用redux-thunk）" class="headerlink" title="异步操作的基本思路（使用redux-thunk）"></a>异步操作的基本思路（使用redux-thunk）</h2><p>假设说我们要向服务器请求数据，而且这个数据在多个模块中要用到，那么我们可以考虑在store中获取数据，并使用redux-thunk中间件，派发三种action，分别是</p>
 <ul>
-<li><p><strong>browserHistory</strong></p>
-<p>是使用react router的应用推荐的history，它使用浏览器中的 History API 用于处理 URL，创建一个像<code>example.com/some/path</code>这样真实的 URL。当URL发生变化的时候，会向服务器发送request请求。对多页面模式应用（MPA），浏览器会通过自身的history处理好页面间的操作，但对于单页面应用（SPA），只有一个真实的HTML页面，是无法体现页面跳转效果的，这时，需要服务器配合，模拟出多个HTML页面，从而实现浏览器真实的页面跳转效果。</p>
-</li>
-<li><p><strong>hashHistory</strong></p>
-<p>Hash history 使用 URL 中的 hash（<code>#</code>）部分去创建形如 <code>example.com/#/some/path</code> 的路由。不需要服务器的任何配置就可以运行。</p>
-</li>
-<li><p><strong>createMemoryHistory</strong></p>
-<p>Memory history 不会在地址栏被操作或读取。这就解释了我们是如何实现服务器渲染的。同时它也非常适合测试和其他的渲染环境（像 React Native ）。</p>
-<p>和另外两种history的一点不同是你必须创建它，这种方式便于测试。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> history = createMemoryHistory(location)<br></code></pre></td></tr></table></figure>
-<h2 id="react-router-dom"><a href="#react-router-dom" class="headerlink" title="react-router-dom"></a>react-router-dom</h2></li>
+<li>fetchDataStart</li>
+<li>fetchDataSuccess</li>
+<li>fetchDataFail</li>
 </ul>
-<p>react-router实现了路由的核心功能，而react-router-dom则基于react-router，加入了浏览器环境下的一些功能，比如说Link组件、BrowserRouter和HashRouter组件。但类似Switch、Route这样的组件，react-router-dom都是从react-router中引入，然后重新导出而已。因此，我们在npm安装时，不用再显示安装react-router了。</p>
-<h2 id="Switch组件"><a href="#Switch组件" class="headerlink" title="Switch组件"></a>Switch组件</h2><p>会从上往下匹配它包裹的Route中的path，渲染第一个匹配的URL。</p>
-<h2 id="Route组件"><a href="#Route组件" class="headerlink" title="Route组件"></a>Route组件</h2><p>他的path属性总是匹配url的前缀，因此path=’/‘会匹配任何url，因此我们要把这一条route放在switch的最后或者使用exact关键字修饰。</p>
-<h2 id="react-router-dom的hooks"><a href="#react-router-dom的hooks" class="headerlink" title="react-router-dom的hooks"></a>react-router-dom的hooks</h2><h3 id="useHistory"><a href="#useHistory" class="headerlink" title="useHistory"></a>useHistory</h3><p>获取history实例，通过history.push()方法跳转路由。</p>
-<h3 id="useLocation"><a href="#useLocation" class="headerlink" title="useLocation"></a>useLocation</h3><p>返回一个location对象，包含当前url的信息。</p>
-<h3 id="useParams"><a href="#useParams" class="headerlink" title="useParams"></a>useParams</h3><p>返回键值对对象，包含匹配到的路由中的参数。</p>
-<h3 id="useRouteMatch"><a href="#useRouteMatch" class="headerlink" title="useRouteMatch"></a>useRouteMatch</h3><p>和<Route>一样用来匹配当前URL，但是不会渲染对应的组件，只是返回match对象。</p>
-<h2 id="withRouter"><a href="#withRouter" class="headerlink" title="withRouter"></a>withRouter</h2><p>使用这个高阶组件，就可以从props中获取到match，location和history的信息。在外部可以通过WrappedComponent这个静态属性获取到原来的组件。</p>
+<p>维护state对象，包含loading、data、error三个属性，分别表示是否加载数据中，获取到的data，出错信息。</p>
+<p>我们的目标是将获取数据的操作放到store中，也就是在component中dispatch一个类似giveMeData这样的action，然后store收到这个action之后自动执行API请求、请求成功或失败后的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs react">&#x2F;&#x2F;在react component中<br>componentDidMount()&#123;<br>  dispatch(giveMeDataActionCreator())<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>一般的action creator返回的都是一个对象，这没有办法满足我们的需求，这时我们就要引入redux-thunk这个中间件，它封装了dispatch这个方法，让dispatch多支持一种参数类型——函数类型。</p>
+<p>giveMeDataCreator返回一个函数，带有dispatch和getState两个redux方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs react">export const giveMeDataCreator &#x3D; () : ThunkAction &#x3D;&gt; (dispatch, getState) &#x3D;&gt; &#123;<br>  dispatch(fetchDataStartCreator());<br>  try&#123;<br>    const &#123; data &#125; &#x3D; await axios.get(...);<br>    dispatch(fetchDataSuccessCreator(data));<br>  &#125; catch (e) &#123;<br>    dispatch(fetchDataFailCreator(e.message));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在这个action creator中，我们连续发送两个action，让reducer完成相关操作。而我们的中间件会持续执行，直到异步逻辑全部结束。</p>
+<p><strong>普通的dispatch只支持对象类型的参数，redux-thunk这个中间件，添加了函数类型参数的支持，类似的，redux-promise添加了对promise类型参数的支持。</strong></p>
+<h2 id="UI组件和容器组件"><a href="#UI组件和容器组件" class="headerlink" title="UI组件和容器组件"></a>UI组件和容器组件</h2><p>React-Redux将所有组件分为UI组件和容器组件两类。</p>
+<p>UI组件特征：</p>
+<ul>
+<li>只负责UI的呈现，不带有任何业务逻辑。</li>
+<li>没有状态（即不使用this.state这个变量）</li>
+<li>所有参数由this.props提供</li>
+<li>不使用任何Redux的API</li>
+</ul>
+<p>容器组件特征：</p>
+<ul>
+<li>负责管理数据和业务逻辑，不负责UI的呈现</li>
+<li>带有内部状态</li>
+<li>使用Redux的API</li>
+</ul>
+<p>当一个组件既涉及UI呈现，又包含业务逻辑处理，我们可以把它拆分成这样的结构：外面一个容器组件，里面包含一个UI组件，前者负责从外部获取数据传给内部，后者负责根据传来的数据渲染出视图。</p>
+<h4 id="connect（）"><a href="#connect（）" class="headerlink" title="connect（）"></a>connect（）</h4><p>react-redux方法提供connect方法用于从UI组件中生成容器组件。使用方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs react">export const Home &#x3D; <br>      connect(<br>        mapStateToProps,<br>        mapDispatchToProps)<br>				(UIComponent)<br></code></pre></td></tr></table></figure>
+<p>这个方法后面跟两个括号，第一个括号接收两个参数mapStateToProps和mapDispatchToProps。第二个括号传入需要包裹的UI组件。</p>
+<h5 id="mapStateToProps"><a href="#mapStateToProps" class="headerlink" title="mapStateToProps"></a>mapStateToProps</h5><p>负责输入逻辑，将外部的state映射为内部的props。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs react">const mapStateToProps &#x3D; (state: RootState, ownProps) &#x3D;&gt; &#123;<br>  return &#123;<br>    loading: state.recommendProducts.loading,<br>    error: state.recommendProducts.error,<br>    productList: state.recommendProducts.productList<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>是一个函数，接收外部的state为参数，返回一个对象，里面的每个键值对就是一个映射，比如说，通过this.props.loading，可以获取到store中state的loading属性。mapStateToProps会订阅store，当state更新时，会自动执行，重新计算UI组件的参数，触发重新渲染。</p>
+<p>如果connect方法省略这个参数，UI组件就不会订阅store，也就是state的更新不会触发UI组件更新。</p>
+<h5 id="mapDispatchToProps"><a href="#mapDispatchToProps" class="headerlink" title="mapDispatchToProps"></a>mapDispatchToProps</h5><p>用来建立UI组件参数到store.dispatch方法的映射。它可以是一个函数，也可以是一个对象。</p>
+<p>如果是函数，他会接收dispatch和ownProps作为参数，返回一个对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs react">const mapDispatchToProps &#x3D; (dispatch) &#x3D;&gt; &#123;<br>  return &#123;<br>    giveMeData: () &#x3D;&gt; &#123;<br>      dispatch(giveMeDataActionCreator())<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果mapDispatchToProps是对象，它的每一个键值是一个函数，被当作action creator。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs react">const mapDispatchToProps &#x3D; &#123;<br>  giveMeData: () &#x3D;&gt; &#123;<br>    type:...,<br>    payload: ...<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h4><p>connect方法能生成容器组件，但要让容器获取到store中的state，才能生成UI组件的参数。</p>
+<p>一种方便的方法是，使用react-redux提供的Provider组件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs react">import &#123; Provider &#125; from &#39;react-redux&#39;<br>&lt;Provider store&#x3D;&#123;store&#125;&gt;<br>	&lt;App &#x2F;&gt;<br>&lt;&#x2F;Provider&gt;<br></code></pre></td></tr></table></figure>
+<p>这样的包裹，使得App内所有子组件都可以通过context获取到state。</p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html">阮一峰的网络日志——Redux入门教程一/二/三</a></p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/react-router/">react router</a>
-                    
-                  </div>
                 
               </div>
               
@@ -290,18 +316,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/02/17/Redux/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">React Redux</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/02/11/React-Hook%E5%B0%8F%E7%BB%93/">
-                        <span class="hidden-mobile">React Hook小结</span>
+                      <a href="/2021/02/16/%E5%85%B3%E4%BA%8Ereact-router/">
+                        <span class="hidden-mobile">关于react-router</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
