@@ -17,7 +17,7 @@
   <meta name="description" content="sxx的个人博客">
   <meta name="author" content="suxiaoxin">
   <meta name="keywords" content="">
-  <title>i18n(Internationalization) - xiaoxin</title>
+  <title>受控组件与非受控组件（一） - xiaoxin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -162,7 +162,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="i18n(Internationalization)">
+            <span class="h2" id="subtitle" title="受控组件与非受控组件（一）">
               
             </span>
 
@@ -177,8 +177,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-02-25 18:13" pubdate>
-        2021年2月25日 晚上
+      <time datetime="2021-03-07 10:43" pubdate>
+        2021年3月7日 上午
       </time>
     </span>
   
@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      767 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      10
        分钟
     </span>
   
@@ -237,46 +237,47 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">i18n(Internationalization)</h1>
+            <h1 style="display: none">受控组件与非受控组件（一）</h1>
             
             <div class="markdown-body">
-              <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ul>
-<li><p>语言包作为作为静态资源单独保存</p>
-</li>
-<li><p>每种语言对应一个文件</p>
-</li>
-<li><p>切换语言设置时，语言文件随之切换 </p>
-<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2></li>
+              <h2 id="受控组件"><a href="#受控组件" class="headerlink" title="受控组件"></a>受控组件</h2><p>React里面，HTML的表单元素工作方式和其他DOM不太一样。表单元素通常会维护内部的状态，这些状态会根据用户的输入而更新。而React中，可变状态通常保存在state中，并且只能通过setState更新。</p>
+<p>所以React就把这两种方式结合起来，让state成为React的“唯一数据源”。并且React还控制着用户的输入过程中表单发生的操作。被 React 以这种方式控制取值的表单输入元素就叫做“受控组件”。</p>
+<p>所谓的受控组件和非受控组件，是针对表单元素而言的。</p>
+<p>受控组件有以下几个特点：</p>
+<ul>
+<li>表单元素依赖于状态，它的值始终由React的state来驱动。</li>
+<li>表单元素的修改，会实时映射到state，跟双向绑定类似。</li>
+<li>必须继承React.Component</li>
+<li>受控组件必须在表单上使用onChange来绑定事件</li>
 </ul>
-<p>i18next：目前最主流的框架   react-i18next：提供了更多面向react的api（HOC、hooks）</p>
-<h2 id="配置i18n"><a href="#配置i18n" class="headerlink" title="配置i18n"></a>配置i18n</h2><p>首先创建i18n文件夹，创建configs.ts</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs react">import i18n from &quot;i18next&quot;;<br>import &#123; initReactI18next &#125; from &quot;react-i18next&quot;;<br></code></pre></td></tr></table></figure>
-<p>进行下一步之前，我们要先引入语言文件包，这里我使用中文、英文两种语言，文件是json格式的，所以引入了中文版zh.json和英文版en.json。其实就是普通的json对象，两个文件的结构一样，只有最后的值不同，一个是中文一个是英文。</p>
-<p>接着，我们要在配置文件中引入这两个文件，然后定义一个代表语言资源的本地变量：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs react">import translation_en from &#39;.&#x2F;en.json&#39;<br>import translation_zh from &#39;.&#x2F;zh.json&#39;<br><br>const resources &#x3D; &#123;<br>  en: &#123;<br>    translation: translation_en<br>  &#125;,<br>  zh: &#123;<br>    translation: translation_zh<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>接着按照官方文档进行初始化：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs react">i18n<br>  .use(initReactI18next) &#x2F;&#x2F; 通过react-i18next进行初始化<br>  .init(&#123;<br>    resources,  &#x2F;&#x2F; 传入本地资源变量<br>    lng: &quot;zh&quot;,  &#x2F;&#x2F; 默认语言：zh<br>		&#x2F;&#x2F; keySeparator为true，代表我们可以通过链式结构访问字符串，如：&quot;header.slogan&quot;<br>    &#x2F;&#x2F; keySeparator: false, &#x2F;&#x2F; we do not use keys in form messages.welcome<br><br>    interpolation: &#123;<br>      &#x2F;&#x2F; 不会强行把html字符串转换为普通字符串<br>      escapeValue: false &#x2F;&#x2F; react already safes from xss<br>    &#125;<br>  &#125;);<br></code></pre></td></tr></table></figure>
-<p>最后导出配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs react">export default i18n<br></code></pre></td></tr></table></figure>
-<h2 id="使用i18n"><a href="#使用i18n" class="headerlink" title="使用i18n"></a>使用i18n</h2><p>i18next的基本原理是Context，就是在全局注入provider，然后子组件中使用相应API获取数据。但实际上，我们只需在index.js文件中引入配置文件，就大功告成了，因为react-i18next这个框架在初始化对象的时候，就帮我们完成了context API的注入。所以我们现在已经可以在各组件中使用这个context API了。</p>
-<h3 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h3><p>类组件中，我们使用高阶函数完成语言的注入，导入react-i18next的高阶函数withTranslation，并修改组件的结构：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs react">import &#123; withTranslation &#125; from &quot;react-i18next&quot;<br>class HomeComponent extends React.Component &#123;<br>  ...<br>&#125;<br>export default withTranslation()(HomeComponent)<br></code></pre></td></tr></table></figure>
-<p>这个高阶函数需要写两个小括号，第一个代表命名空间，第二个才是我们的组件。这样，我们就可以在props中访问到函数t了，利用这个函数，我们可以以字符串的形式访问到语言文件的json对象。</p>
-<p>因为要在props中使用t，我们要先传入i18n的typescript定义。导入WithTranslation，这个就是typescript的类型定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs react">import &#123; withTranslation, WithTranslation &#125; from &quot;react-i18next&quot;;<br>type PropsType &#x3D; WithTranslation<br>class HomeComponent extends React.Component&lt;PropsType&gt; &#123;<br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>然后我们就用t函数来替换硬编码的字符串。比如说把首页的“爆款推荐”换成<code>&#123;t(&quot;home_page.hot_recommend&quot;)&#125;</code>。</p>
-<h3 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h3><p>在函数式组件中调取全局数据，用的是钩子函数，首先，我们要引入useTranslation这个hook</p>
-<p><code>import &#123; useTranslation &#125; from &#39;react-i18next&#39;;</code></p>
-<p>然后直接使用得到t函数即可，之后的用法和类组件一模一样。</p>
-<p><code>const &#123; t &#125; = useTranslation();</code></p>
-<h2 id="语言切换"><a href="#语言切换" class="headerlink" title="语言切换"></a>语言切换</h2><p>现在，我们可以正常显示语言了，还差最后一步，就是实现中英切换。由于language保存在store中，所以我们点击语言切换时，用reducer来改变store中的状态，在处理全局language数据的同时，我们调用i18next的API来切换语言即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs react">&#x2F;&#x2F; languageReducer.ts<br>import i18n from &#39;i18next&#39;;<br>switch (action.type) &#123;<br>    case CHANGE_LANGUAGE:<br>    	&#x2F;&#x2F; 传入的是语言的key<br>      i18n.changeLanguage(action.payload);<br>      return &#123; ...state, language: action.payload &#125;;<br>    ...<br>  &#125;<br></code></pre></td></tr></table></figure>
-<p>现在我们功能已经实现了，但是这么实现是有问题的。根据redux的定义所以的reducer都是纯函数，也就是没有副作用的函数，但是我们调用i18n.changeLanguage()这个函数时，这个reducer就不再是纯函数了，所以我们要使用中间件来改进。</p>
-<p>在middlewares文件夹中创建changeLanguage.ts，编写中间件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs react">import &#123; Middleware &#125; from &#39;redux&#39;;<br>import &#123; CHANGE_LANGUAGE &#125; from &quot;..&#x2F;language&#x2F;languageActions&quot;;<br>import i18n from &quot;i18next&quot;;<br><br>export const changeLanguage : Middleware &#x3D; (store) &#x3D;&gt; (next) &#x3D;&gt; (action) &#x3D;&gt; &#123;<br>  if(action.type &#x3D;&#x3D;&#x3D; CHANGE_LANGUAGE)&#123;<br>    i18n.changeLanguage(action.payload);<br>  &#125;<br>  next(action);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>然后在store文件中引入即可：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs react">const store &#x3D; configureStore(&#123;<br>  reducer: persistedReducer,<br>  middleware: (getDefaultMiddleware) &#x3D;&gt; [...getDefaultMiddleware(), changeLanguage, actionLog],<br>  devTools: true,<br>&#125;)<br></code></pre></td></tr></table></figure>
-<p>现在我们就完全实现了语言的切换功能。</p>
+<h4 id="常见的受控组件："><a href="#常见的受控组件：" class="headerlink" title="常见的受控组件："></a>常见的受控组件：</h4><ol>
+<li>input</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InputForm</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">props</span>)</span>&#123;<br>		<span class="hljs-built_in">this</span>.state = &#123;<br>			value: <span class="hljs-string">&#x27;&#x27;</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">this</span>.handleChange = handleChange.bind(<span class="hljs-built_in">this</span>);<br>	<span class="hljs-function"><span class="hljs-title">handleChange</span>(<span class="hljs-params">e</span>)</span>&#123;<br>		<span class="hljs-built_in">this</span>.setState(&#123;<span class="hljs-attr">value</span>: e.target.value&#125;)<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-keyword">return</span> (<br>			&lt;form&gt;<br>				&lt;input<br>					value=&#123;<span class="hljs-built_in">this</span>.state.value&#125;<br>					onChange=&#123;<span class="hljs-built_in">this</span>.handleChange&#125;<br>				/&gt;<br>			&lt;/form&gt;<br>		)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>但如果input标签的type取值为“file”，它的value是只读的，所以它是非受控组件。</p>
+<ol start="2">
+<li>textarea</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextAreaForm</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>	constructor()&#123;<br>		<span class="hljs-keyword">this</span>.state = &#123;<br>			value: <span class="hljs-string">&quot;默认文本&quot;</span><br>		&#125;<br>	&#125;<br>	render()&#123;<br>		<span class="hljs-keyword">return</span> (<br>			&lt;textarea <br>        value=&#123;<span class="hljs-keyword">this</span>.state.value&#125; <br>        onChange=&#123;(e) =&gt; &#123;<span class="hljs-keyword">this</span>.setState(&#123;value: e.target.value&#125;)&#125;&#125;<br>			/&gt;<br>		)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>select </p>
+<p>React不会使用selected属性，而是在selected标签里用value表示选中项。</p>
+<p>对于多选框。可以在value里传入一个数组。</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SelectForm</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>&#123;<br>	<span class="hljs-function"><span class="hljs-title">cosntructor</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-built_in">this</span>.state = &#123;<br>			value: <span class="hljs-string">&quot;item1&quot;</span><br>			<span class="hljs-comment">// value: [&quot;item1&quot;, &quot;item2&quot;]</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span>&#123;<br>		<span class="hljs-keyword">return</span> (<br>			&lt;select<br>      	&#123;<span class="hljs-comment">/* mutiply=&#123;true&#125; */</span>&#125;<br>				value=&#123;<span class="hljs-built_in">this</span>.state.value&#125;<br>				onChange=&#123;<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> &#123;<span class="hljs-built_in">this</span>.setState(&#123;e.target.value&#125;)&#125;&#125;<br>			&gt;<br>          &lt;option value=<span class="hljs-string">&quot;item1&quot;</span>&gt;item1&lt;/option&gt;<br>          &lt;option value=<span class="hljs-string">&quot;item2&quot;</span>&gt;item2&lt;/option&gt;<br>          &lt;option value=<span class="hljs-string">&quot;item3&quot;</span>&gt;item3&lt;/option&gt;<br>			&lt;/select&gt;<br>		)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li><p>我们必须给受控组件添加onChange事件监听函数，否则浏览器会报错：<img src="/2021/03/07/%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%E4%B8%8E%E9%9D%9E%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89/%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B61.png" srcset="/img/loading.gif" alt="受控组件1"></p>
+<p>解决办法：设置readOnly属性或者添加onChange函数</p>
+</li>
+<li><p>当我们给input的value属性指定一个和state相关的值，或者没有在onChange函数中写setState逻辑，会阻止用户的输入，但指定null或undefined除外：</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml">// 用户无法输入<br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;hi&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&#123;this.state.value&#125;</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">&#123;()</span>=&gt;</span>&#123;&#125;&#125;<br>// 用户可以输入<br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&#123;null&#125;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&#123;undefined&#125;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<p>有时候，使用受控组件是件很麻烦的事情，需要为数据变化的每一种方式都编写处理函数，并通过一个React组件传递所有的state。如果将非React代码转成React代码或者做React代码和非React代码集成时，会非常繁琐。这些情况下，可以引用非受控组件——表单的另一种实现方式。</p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/forms.html#controlled-components">React官方文档</a></p>
 
             </div>
             <hr>
@@ -296,8 +297,6 @@
                     
                       <a class="hover-with-bg" href="/tags/React/">React</a>
                     
-                      <a class="hover-with-bg" href="/tags/i18n/">i18n</a>
-                    
                   </div>
                 
               </div>
@@ -309,9 +308,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/03/07/%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%E4%B8%8E%E9%9D%9E%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%EF%BC%88%E4%B8%80%EF%BC%89/">
+                      <a href="/2021/03/07/%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%E4%B8%8E%E9%9D%9E%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6%EF%BC%88%E4%BA%8C%EF%BC%89/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">受控组件与非受控组件（一）</span>
+                        <span class="hidden-mobile">受控组件与非受控组件（二）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -319,8 +318,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/02/17/Redux/">
-                        <span class="hidden-mobile">React Redux</span>
+                      <a href="/2021/02/25/i18n%E5%AE%9E%E7%8E%B0%E8%AF%AD%E8%A8%80%E5%88%87%E6%8D%A2/">
+                        <span class="hidden-mobile">i18n(Internationalization)</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
