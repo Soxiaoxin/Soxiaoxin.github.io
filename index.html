@@ -181,6 +181,56 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/03/23/%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%9A%84%E4%BC%98%E5%8C%96/">页面加载的优化</a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/03/23/%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%9A%84%E4%BC%98%E5%8C%96/">
+          
+          
+            
+          
+          HTML的解析在浏览器渲染引擎中，有一个HTML解析器，负责将HTML字节流转换为DOM结构。
+网络进程中加载了多少数据，HTML解析器就会解析多少数据（不会等整个HTML文档加载完，再进行解析）
+一般流程：
+
+通过分词器，将字节流转换为token
+将token解析为DOM节点
+将DOM节点添加到DOM树中
+
+解析HTML时遇到JS和CSS会怎么样结论是：JS是全阻塞的，CSS是半阻塞的。
+如果遇
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-23 15:48" pubdate>
+              2021-03-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/03/20/redux%E4%B8%AD%E9%97%B4%E4%BB%B6/">解读Redux中间件源码</a>
       </h1>
 
@@ -611,61 +661,6 @@ Reacr component中可以通过store.get
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/React-Router/">React Router</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/02/11/React-Hook%E5%B0%8F%E7%BB%93/">React Hook</a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/02/11/React-Hook%E5%B0%8F%E7%BB%93/">
-          
-          
-            
-          
-          
-Hook是 React 16.8 的新增特性。它可以让你在不编写 class 的情况下使用 state 以及其他的 React 特性。
-
-使用Hook的动机
-Hook 使你在无需修改组件结构的情况下复用状态逻辑。在Hook之前，我们可以使用render props和高阶组件来添加可复用的状态逻辑。
-render props就是在react组件之间使用一个值为函数的prop共享代码技术，组件接收一
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-02-11 16:07" pubdate>
-              2021-02-11
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/React/">React</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/React/">React</a>
-            
-              <a href="/tags/Hook/">Hook</a>
             
           </div>
         
