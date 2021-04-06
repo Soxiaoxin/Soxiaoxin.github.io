@@ -151,20 +151,6 @@
 
   
   <url>
-    <loc>http://example.com/tags/React/</loc>
-    <lastmod>2021-04-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/Hook/</loc>
-    <lastmod>2021-04-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/Leetcode/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
@@ -180,6 +166,20 @@
   
   <url>
     <loc>http://example.com/tags/%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/React/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/Hook/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -230,13 +230,6 @@
 
   
   <url>
-    <loc>http://example.com/categories/React/</loc>
-    <lastmod>2021-04-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/categories/Algorithm/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
@@ -244,7 +237,21 @@
   </url>
   
   <url>
+    <loc>http://example.com/categories/React/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://example.com/categories/Vue/</loc>
+    <lastmod>2021-04-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/categories/JavaScript/</loc>
     <lastmod>2021-04-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
