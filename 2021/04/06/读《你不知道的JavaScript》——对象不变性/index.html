@@ -17,7 +17,7 @@
   <meta name="description" content="sxx的个人博客">
   <meta name="author" content="suxiaoxin">
   <meta name="keywords" content="">
-  <title>页面加载的优化 - xiaoxin</title>
+  <title>读《你不知道的JavaScript》——对象不变性 - xiaoxin</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -162,7 +162,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="页面加载的优化">
+            <span class="h2" id="subtitle" title="读《你不知道的JavaScript》——对象不变性">
               
             </span>
 
@@ -177,8 +177,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-03-23 15:48" pubdate>
-        2021年3月23日 下午
+      <time datetime="2021-04-06 13:50" pubdate>
+        2021年4月6日 下午
       </time>
     </span>
   
@@ -189,7 +189,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1k 字
+      442 字
     </span>
   
 
@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11
+      5
        分钟
     </span>
   
@@ -229,70 +229,25 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">页面加载的优化</h1>
+            <h1 style="display: none">读《你不知道的JavaScript》——对象不变性</h1>
             
             <div class="markdown-body">
-              <h2 id="HTML的解析"><a href="#HTML的解析" class="headerlink" title="HTML的解析"></a>HTML的解析</h2><p>在浏览器渲染引擎中，有一个HTML解析器，负责将HTML字节流转换为DOM结构。</p>
-<p>网络进程中加载了多少数据，HTML解析器就会解析多少数据（不会等整个HTML文档加载完，再进行解析）</p>
-<p>一般流程：</p>
-<ol>
-<li>通过分词器，将字节流转换为token</li>
-<li>将token解析为DOM节点</li>
-<li>将DOM节点添加到DOM树中</li>
-</ol>
-<h2 id="解析HTML时遇到JS和CSS会怎么样"><a href="#解析HTML时遇到JS和CSS会怎么样" class="headerlink" title="解析HTML时遇到JS和CSS会怎么样"></a>解析HTML时遇到JS和CSS会怎么样</h2><p>结论是：JS是全阻塞的，CSS是半阻塞的。</p>
-<p>如果遇到script标签或者外部的JS文件，会阻塞DOM的解析和其他资源的加载，因为JS脚本可能会修改DOM结构。</p>
-<p>如果遇到css文件，不会阻塞DOM的解析，但是会阻塞JS的加载，因为JS脚本中可能依赖最新样式。也会阻塞页面的渲染，在cssom树构建好之前，浏览器不会有任何显示，因为没有css的页面通常是凌乱的，无法使用的。</p>
-<h2 id="浏览器预加载"><a href="#浏览器预加载" class="headerlink" title="浏览器预加载"></a>浏览器预加载</h2><p>虽然在脚本执行的时候，构建DOM是不安全的。但我们仍然可以继续解析HTML，查看它所需要的资源。这就是现在很多浏览器支持的预解析。</p>
-<p>当脚本正在执行时，仍然继续解析HTML，找到以来的文件，在后台并行的下载。当脚本执行完毕之后，这些文件可能已经下载完成，可以直接使用了。虽然脚本可能会改变HTML结构，导致一些“预测”的浪费，但是这不常见，预解析还是会带来性能上的提升。</p>
-<h2 id="prefetch"><a href="#prefetch" class="headerlink" title="prefetch"></a>prefetch</h2><p>允许浏览器获取资源并存储在缓存中，他告诉浏览器未来可能会使用某个资源，浏览器会在空闲时间加载。</p>
-<p>prefetch的分类：</p>
-<ul>
-<li>DNS prefetch</li>
-<li>Link prefetch</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;...&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;script&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<blockquote>
-<p>prerender:和prefetch非常类似，优化了导航到下一页面的资源加载。区别是：prerender在后台渲染了整个页面。</p>
-<p><code>&lt;link rel=&quot;prerender&quot; href=&quot;...&quot;&gt;</code></p>
-</blockquote>
-<h2 id="preload"><a href="#preload" class="headerlink" title="preload"></a>preload</h2><p>向浏览器声明一个需要提前加载的资源，当资源真正需要使用时，立即执行。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;preload&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;...&quot;</span> <span class="hljs-attr">as</span>=<span class="hljs-string">&quot;style&quot;</span>&gt;</span><br>或者<br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="javascript">	<span class="hljs-keyword">const</span> link = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;link&#x27;</span>);</span><br><span class="javascript">  link.rel = <span class="hljs-string">&quot;preload&quot;</span>;</span><br><span class="javascript">  link.href = <span class="hljs-string">&#x27;...&#x27;</span>;</span><br><span class="javascript">  link.as = <span class="hljs-string">&#x27;style&#x27;</span>;</span><br><span class="javascript">  <span class="hljs-built_in">document</span>.head.appendChild(link);</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<h2 id="三者不同之处"><a href="#三者不同之处" class="headerlink" title="三者不同之处"></a>三者不同之处</h2><ul>
-<li><p>浏览器预解析和preload的区别</p>
-<p>浏览器的预解析，只能预先加载HTML声明的资源。但是preload指令事实上克服了这个限制，它允许预加载在CSS和JavaScript中定义的资源，并允许决定何时应用这个资源。</p>
-</li>
-<li><p>preload和prefetch的区别</p>
-<p>preload专注于当前页面，以更高的优先级加载资源。prefetch专注于下一个页面将要加载的资源，并以低优先级加载。</p>
-</li>
-</ul>
-<h2 id="不同资源的优先级"><a href="#不同资源的优先级" class="headerlink" title="不同资源的优先级"></a>不同资源的优先级</h2><p>一个资源有五个优先级：<code>Highest High Medium Low Lowest</code></p>
-<p>一般来说，HTML/CSS的优先级最高，其次是font字体资源，然后是图片资源（出现在视口&gt;没有出现在视口）</p>
-<ul>
-<li>对于prefetch的资源，优先级默认为最低，Lowest</li>
-<li>对于preload的资源，可以通过as或者type指定优先级（比如通过<code>as=&quot;style&quot;</code>指定，即使资源不是样式文件）</li>
-<li>没有as的会被当作异步请求</li>
-</ul>
-<h2 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h2><ul>
-<li>使用preload提前加载字体文件</li>
-<li>在onload中预加载第二屏的内容，这也用户滚动能更快看到次屏内容</li>
-<li>分析页面上的链接，使用prefetch加载下一跳页面的资源</li>
-<li>预测用户行为，比如在商品列表页，如果用户鼠标停留在某个商品超过一段时间，就去分析商品详情页所需要的资源进行preload</li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/48521680">使用 Preload/Prefetch 优化你的应用</a></p>
-<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903646996480007">什么是 Preload，Prefetch 和 Preconnect？</a></p>
+              <p>我们知道，ES6引入的const是用来定义常量的，对于基本数据类型来说，变量存储的是数据的值，所以用起来没问题，但当我们使用const定义一个数组或者对象时，由于存储的是对象的地址，所以即使我们修改了对象的某一键值，或者为数组增加、删除一项，它的存储地址，所以依旧是常量，这有时候不是我们想要的。</p>
+<p>那么要如何定义一个“真正”的对象类型的常量呢？</p>
+<h4 id="使用对象的属性描述符"><a href="#使用对象的属性描述符" class="headerlink" title="使用对象的属性描述符"></a>使用对象的属性描述符</h4><p>使用<code>configurable: false</code>和<code>writable: false</code>创建一个常量属性(不可修改、重定义或删除)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> myObj = &#123;&#125;;<br><span class="hljs-built_in">Object</span>.defineProperty(myObj, <span class="hljs-string">&#x27;a&#x27;</span>, &#123;<br>  value: <span class="hljs-number">1</span>,<br>  configurable: <span class="hljs-literal">false</span>,<br>  writable: <span class="hljs-literal">false</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+<h4 id="禁止扩展"><a href="#禁止扩展" class="headerlink" title="禁止扩展"></a>禁止扩展</h4><p>禁止一个对象添加新的属性。原有的属性可以修改可以使用delete删除。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> myObj = &#123;<span class="hljs-attr">a</span>: <span class="hljs-number">2</span>&#125;;<br><span class="hljs-built_in">Object</span>.preventExtensions(myObj);<br>myObj.b = <span class="hljs-number">3</span>;<br>myObj.b; <span class="hljs-comment">// undefined</span><br>myObj.a = <span class="hljs-number">3</span>;<br>myObj.a; <span class="hljs-comment">// 3</span><br><span class="hljs-keyword">delete</span> myObj.a <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+<h4 id="密封"><a href="#密封" class="headerlink" title="密封"></a>密封</h4><p><code>Object.seal</code>:创建一个“密封”的对象，实际上是在现有的对象上调用<code>Object.preventExtensions(..)</code>并把所有的现有属性标记为<code>configurable: false</code></p>
+<p>密封之后，不能添加新属性，也不能重新配置或删除任何现有属性，但是可以修改现有属性的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> obj = &#123; <span class="hljs-attr">a</span>: <span class="hljs-number">2</span> &#125;;<br><span class="hljs-built_in">Object</span>.seal(obj);<br>obj.b = <span class="hljs-number">1</span>;<br>obj.b <span class="hljs-comment">// undefined</span><br><span class="hljs-built_in">Object</span>.defineProperty(obj, <span class="hljs-string">&#x27;a&#x27;</span>, &#123;<br>    configurable: <span class="hljs-literal">true</span><br>&#125;) <span class="hljs-comment">// Uncaught TypeError: Cannot redefine property: a</span><br>obj.a = <span class="hljs-number">3</span><br>obj.a <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
+<h4 id="冻结"><a href="#冻结" class="headerlink" title="冻结"></a>冻结</h4><p><code>Object.freeze(..)</code>创建一个冻结对象，实际上是在现有的对象上调用<code>Object.seal(..)</code>并把所有的“数据访问”属性标记为<code>writable: false</code>,这样就无法修改属性的值。这个方法是级别最高的不可变性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">Object</span>.freeze(obj)<br>obj.a = <span class="hljs-number">4</span><br>obj.a <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
-                    
-                  </div>
                 
                 
               </div>
@@ -304,18 +259,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/04/06/%E8%AF%BB%E3%80%8A%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E3%80%8B%E2%80%94%E2%80%94%E5%AF%B9%E8%B1%A1%E4%B8%8D%E5%8F%98%E6%80%A7/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">读《你不知道的JavaScript》——对象不变性</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/03/20/redux%E4%B8%AD%E9%97%B4%E4%BB%B6/">
-                        <span class="hidden-mobile">解读Redux中间件源码</span>
+                      <a href="/2021/03/23/%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%9A%84%E4%BC%98%E5%8C%96/">
+                        <span class="hidden-mobile">页面加载的优化</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
