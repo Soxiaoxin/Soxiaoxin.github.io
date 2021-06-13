@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="sxx的个人博客">
+  <meta name="author" content="suxiaoxin">
+  <meta name="keywords" content="">
+  <title>前端模块化 - xiaoxin</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":150,"cursorChar":"_","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>xiaoxin</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/cloud.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="前端模块化">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      suxiaoxin
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-13 12:56" pubdate>
+        2021年6月13日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">前端模块化</h1>
+            
+            <div class="markdown-body">
+              <h2 id="为什么前端开发需要模块化？"><a href="#为什么前端开发需要模块化？" class="headerlink" title="为什么前端开发需要模块化？"></a>为什么前端开发需要模块化？</h2><p>在讨论模块化之前，我们先了解一下以前的代码是怎么组织的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 许多html代码 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">scr</span>=<span class="hljs-string">&#x27;./index.js&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>一开始，我们可能会将所有的JS代码写在一个index.js文件里，然后通过script标签引入。后来，随着业务逐渐复杂，index.js文件变得庞大，也变得难以维护。所以我们考虑将代码按照功能模块，拆分到不同的文件里，然后引入多个js文件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#x27;./a.js&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#x27;./b.js&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&#x27;./c.js&#x27;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  ...<br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>通过这样的拆分，我们各个文件的代码量变少了，看起来确实会更清晰，但是也会带来几个问题：</p>
+<ul>
+<li><p>命名冲突和变量污染</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// a.js</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><br><span class="hljs-comment">// b.js</span><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">2</span>;<br><br><span class="hljs-comment">// index.html</span><br>&lt;script src=<span class="hljs-string">&quot;./a.js&quot;</span>&gt;&lt;/script&gt;<br>&lt;script src=<span class="hljs-string">&quot;./b.js&quot;</span>&gt;&lt;/script&gt;<br>&lt;script&gt;<br>  <span class="hljs-built_in">console</span>.log(a, b); <br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+<p>假设有两个功能模块a和b，分别拆分到a.js和b.js中，上面的代码打印出来的是<code>1 2</code>，其实没有什么问题，但如果有一天，一个新接手的程序员，在b.js中又定义了一个变量a。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// a.js</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><br><span class="hljs-comment">// b.js</span><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">2</span>;<br><span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+<p>这时候，控制台打印的代码变成：<code>3 2</code>。由于a和b都是定义到了全局作用域，所用两个模块的变量命名有了冲突。我们可以通过修改变量名来规避，但这是治标不治本的，因为他们没有自己的作用域，所以我们依然可以在b模块中，修改a模块的变量，可能会造成一些bug。</p>
+</li>
+<li><p>资源或模块之间的依赖</p>
+<p>如上面的代码片段，在html中添加了很多script标签来一个个引入资源，首先可能会造成很多请求，导致页面卡顿。</p>
+<p>更重要的是，如果资源之间有依赖关系，还要按照依赖关系从上到下排序。如果引入了defer或async属性，逻辑将会变得更加复杂，难以维护。</p>
+</li>
+</ul>
+<h2 id="实现模块化"><a href="#实现模块化" class="headerlink" title="实现模块化"></a>实现模块化</h2><p>那么我们要如何解决这两个问题呢？</p>
+<h3 id="解决命名冲突和变量污染"><a href="#解决命名冲突和变量污染" class="headerlink" title="解决命名冲突和变量污染"></a>解决命名冲突和变量污染</h3><p>为了避免命名冲突和变量污染，我们想到为每一个模块创建一个私有的作用域，避免命名冲突，模块外只能访问被暴露的一些变量，避免变量污染。</p>
+<p>由于在函数内部可以形成一个局部作用域，所以我们可以将模块的代码包裹到一个函数中，而且考虑到我们往往只需要调用一次这个函数，所以可以使用立即执行函数表达式（IIFE）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// a.js</span><br><span class="hljs-keyword">var</span> moduleA = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(a);<br>  &#125;<br>  <span class="hljs-keyword">return</span> &#123;<br>    foo,<br>  &#125;;<br>&#125;)();<br><br><span class="hljs-comment">// b.js</span><br><span class="hljs-keyword">var</span> moduleB = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> b = <span class="hljs-number">2</span>;<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">foo</span>(<span class="hljs-params"></span>)</span>&#123;<br>    <span class="hljs-built_in">console</span>.log(a, b);<br>  &#125;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span>;<br>  <span class="hljs-keyword">return</span> &#123;<br>    foo,<br>  &#125;<br>&#125;)();<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- index.html --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./a.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./b.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="javascript">  moduleA.foo(); <span class="hljs-comment">// 1</span></span><br><span class="javascript">  moduleB.foo(); <span class="hljs-comment">// 3 2</span></span><br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这个时候，尽管两个module都有变量a和方法foo，但是他们都在各自的作用域里，不会造成命名冲突，而且moduleB也无法修改moduleA的变量，不会造成变量污染。</p>
+<h3 id="解决模块间的依赖"><a href="#解决模块间的依赖" class="headerlink" title="解决模块间的依赖"></a>解决模块间的依赖</h3><p>我们的一个模块，可以会依赖另外一个模块，所以在html中，我们要注意按顺序引入，比如有这样一个依赖图：</p>
+<p><img src="/2021/06/13/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E4%BE%9D%E8%B5%961.png" srcset="/img/loading.gif" alt="依赖1"></p>
+<p>通过拓扑排序，我们的引入顺序可能是：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./d.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./c.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./b.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./a.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>这时候，如果新添加一个moduleE，那么我们要重新分析依赖，把moduleE的引入放在合适的位置。随着业务的发展，每次添加一个module，都要重新分析的话，不仅笨重，而且给维护也带来了一定的困难。</p>
+<p>所以，手动管理依赖终究不是一个好办法。</p>
+<h2 id="模块化规范"><a href="#模块化规范" class="headerlink" title="模块化规范"></a>模块化规范</h2><p>虽然上面我们讨论了模块化的实现，但还是存在两个问题：</p>
+<ul>
+<li>模块化实现方式不统一</li>
+<li>手动维护模块依赖困难</li>
+</ul>
+<p>为了解决这两个问题，开发人员们提出了模块化规范，也就是统一定义模块的方法，以及解放手动维护依赖。</p>
+<p>目前主流的三种模块化规范分别是：</p>
+<ul>
+<li>CommonJS</li>
+<li>AMD</li>
+<li>CMD</li>
+</ul>
+<h4 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h4><p>这个规范在Node.js中被广泛使用，每个文件就是一个模块。有四个关键的环境变量：</p>
+<ul>
+<li><code>module</code>：每个模块内部都有一个这样的变量，表示当前模块</li>
+<li><code>exports</code>：module的一个属性，表示对外暴露的接口</li>
+<li><code>global</code>：表示全局环境（Node）</li>
+<li><code>require</code>：同步加载某个模块的exports属性</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// a.js</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">var</span> addA = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> a + value;<br>&#125;<br><span class="hljs-built_in">module</span>.exports = &#123;<br>  a,<br>  addA<br>&#125;<br><br><span class="hljs-comment">// b.js</span><br><span class="hljs-keyword">const</span> &#123; a, addA &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a.js&#x27;</span>);<br><span class="hljs-built_in">console</span>.log(a); <span class="hljs-comment">// 1</span><br><span class="hljs-built_in">console</span>.log(addA(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 3</span><br></code></pre></td></tr></table></figure>
+<p>这个规范中，以同步的方式加载模块。因为在服务端，模块文件都存在本地磁盘，读取速度快，这这样做不会有问题，但如果在浏览器端，由于网络原因，应该使用异步加载，提前编译打包好。</p>
+<p>CommonJS模块的加载机制是，加载被输出的值的拷贝，也就是说，一旦这个值输出了，模块内部对这个值的修改，不会影响被输出的值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// a.js</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">var</span> addA = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>  a++;<br>&#125;<br><span class="hljs-keyword">var</span> getA = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> a;<br>&#125;<br><span class="hljs-built_in">module</span>.exports = &#123;<br>  a,<br>  addA,<br>  getA<br>&#125;<br><br><span class="hljs-comment">// b.js</span><br><span class="hljs-keyword">var</span> &#123; a, addA, getA &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>);<br><span class="hljs-built_in">console</span>.log(a); <span class="hljs-comment">// 1</span><br>addA();<br><span class="hljs-built_in">console</span>.log(a); <span class="hljs-comment">// 1</span><br><span class="hljs-built_in">console</span>.log(getA()); <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+<p>从上面一段代码可以看到，调用了addA方法，虽然a.js内部的a值已经变成了2，但是这不会影响到b.js模块引入的a值，因因为a是原始类型的值，载入时被缓存起来了。</p>
+<h4 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h4><p>一般在浏览器环境下采用，异步加载模块，所有依赖这个模块的语句，都会被定义在一个回调函数中。</p>
+<p>主要命令：<code>define(id?, dependency?, factory)</code>、<code>require(modules, callback)</code></p>
+<p>使用方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 定义没有依赖的模块A</span><br>define(<span class="hljs-string">&#x27;moduleA&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-built_in">require</span>, <span class="hljs-built_in">exports</span>, <span class="hljs-built_in">module</span></span>) </span>&#123;<br>  <span class="hljs-comment">//...</span><br>&#125;);<br><span class="hljs-comment">// 定义依赖模块A、B、C的模块D</span><br>define(<span class="hljs-string">&#x27;moduleD&#x27;</span>, [<span class="hljs-string">&#x27;moduleA&#x27;</span>, <span class="hljs-string">&#x27;moduleB&#x27;</span>, <span class="hljs-string">&#x27;moduleC&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b, c</span>) </span>&#123;<br>  <span class="hljs-comment">// 在最前面声明并初始化了依赖的所有模块</span><br>  <span class="hljs-keyword">if</span>(<span class="hljs-literal">false</span>)&#123;<br>    <span class="hljs-comment">// 即便没用到b，但b还是初始化且执行了</span><br>    b.dosomething();<br>  &#125;<br>  <span class="hljs-comment">// 通过return方法暴露接口</span><br>  <span class="hljs-keyword">return</span> &#123;<br>    ...<br>  &#125;<br>&#125;);<br><br><span class="hljs-comment">// 加载模块</span><br><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;moduleA&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a</span>) </span>&#123;<br><span class="hljs-comment">// ...  </span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>实现这个规范，需要模块加载器require.js，所以引入模块之前，我们要先引入require.js文件，新建main.js，作为入口文件，也可以使用require.config()定义模块依赖的配置。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./require.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./main.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// main.js</span><br><span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;a&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a</span>) </span>&#123;<br>  a.say(); <span class="hljs-comment">// b a</span><br>&#125;);<br><br><span class="hljs-comment">// a.js</span><br>define(<span class="hljs-string">&#x27;a&#x27;</span>, [<span class="hljs-string">&#x27;b&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">b</span>) </span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">say</span>(<span class="hljs-params"></span>) </span>&#123;<br>    b.say();<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;a&#x27;</span>);<br>  &#125;<br>  <span class="hljs-keyword">return</span> &#123;<br>    say<br>  &#125;<br>&#125;);<br><br><span class="hljs-comment">// b.js</span><br>define(<span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"><span class="hljs-built_in">require</span>, <span class="hljs-built_in">exports</span>, <span class="hljs-built_in">module</span></span>)</span>&#123;<br>  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">say</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;b&#x27;</span>);<br>  &#125;<br>  <span class="hljs-built_in">exports</span>.say = say;<br>&#125;)<br></code></pre></td></tr></table></figure>
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><p>另一种js模块化方案，与AMD类似。AMD推崇依赖前置，提前执行。而CMD推崇依赖就近、延迟执行。在使用某个模块时，需要显式声明。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js">define([<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b, c</span>) </span>&#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>); <span class="hljs-comment">// 使用时需声明</span><br>  a.doSomething();<br>&#125;)<br></code></pre></td></tr></table></figure>
+<p>要使用这个规范，需要引入模块加载器SeaJS，用法类似requireJS，只是需要在回调函数里显式的使用require引入模块，在这里暂时不赘述。</p>
+<p>随着时代的发展，Web相关的标准不断更新，ES6也引入了新的模块规范，requireJS和SeaJS虽然能用，但是也过时了，人们对它们不再像从前一样依赖。</p>
+<h2 id="ES6-module"><a href="#ES6-module" class="headerlink" title="ES6 module"></a>ES6 module</h2><p>无论是CommonJS还是AMD，都是在运行的时候，才能确定模块的依赖关系和输入输出，而ES6的模块设计，则是追求尽量静态化。在模块中你使用 import 和 export 关键字来导入或导出模块中的东西。</p>
+<p>ES6 module有几个特点：</p>
+<ul>
+<li>自动开启严格模式</li>
+<li>一个 JS 文件就代表一个 JS 模块</li>
+<li>每个模块就是一个单例，只会加载一次</li>
+</ul>
+<p>和CommonJS相比：</p>
+<ul>
+<li><p>commonJS输出的是值的拷贝，ES6输出的是值的引用</p>
+</li>
+<li><p>commonJS是运行时加载，ES6是编译时输出接口。commonJS模块就是对象，在输入时加载整个模块，再从这个对象上读方法。而ES6允许import指定加载某个输出值。</p>
+<p>因为CommonJS 加载的是一个对象（即<code>module.exports</code>属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// a.js</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br>a = <span class="hljs-number">2</span>;<br><br><span class="hljs-comment">// main.js</span><br><span class="hljs-keyword">import</span> &#123; a &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a&#x27;</span>;<br><span class="hljs-built_in">console</span>.log(a); <span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+<p>注意，默认导出有两种方法，它们有微妙的区别：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 第一种写法</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> a;<br><br><span class="hljs-comment">// 第二种写法</span><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">export</span> &#123; a <span class="hljs-keyword">as</span> <span class="hljs-keyword">default</span> &#125;;<br><br></code></pre></td></tr></table></figure>
+<ul>
+<li>第一种写法中，export default绑定的是a这个表达式，而不是标识符。因此，当在export default后更新a值，并不会反映到导出的值中。</li>
+<li>而第二种写法，导出绑定了a这个标识符，所以a的修改会影响到导出侧的值。</li>
+</ul>
+<p>实际采用哪一种写法，可以根据这个导出后续是否需要更新来选择。无论如何，我们最好通过代码注释，来解释我们的意图。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>为了解决命名冲突、变量污染以及模块依赖管理的问题，前端引入了模块化的规范。</p>
+<p>其中，CommonJS规范是同步加载，适合服务器端使用。</p>
+<p>在浏览器端，我们要使用异步的模块化规范，早期提出了AMD和CMD规范.</p>
+<p>随着时代的发展，ES6 module参考CommonJS和AMD，标准化了模块的加载和解析方式，实现起来也更加简单，提供了更加简洁的语法，成为了浏览器和服务器端通用的一种规范。</p>
+<p><img src="/2021/06/13/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/%E6%A8%A1%E5%9D%97%E5%8C%96.png" srcset="/img/loading.gif" alt="总结"></p>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903744518389768#heading-49">前端模块化详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://ke.qq.com/classroom/index.html#course_id=327150&term_id=100388238&ch_id=498625&vch_id=274&section_id=1077&task_id=2639536576593390">NEXT学位课程</a></p>
+<p>《你不知道的JavaScript》（下卷）</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/06/08/%E3%80%90%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93%E3%80%91%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+                        <span class="hidden-mobile">正则表达式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'Soxiaoxin/comment-utterance');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
