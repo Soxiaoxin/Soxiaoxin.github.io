@@ -199,7 +199,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      21
+      22
        分钟
     </span>
   
@@ -339,7 +339,9 @@
 <td>多行搜索</td>
 </tr>
 </tbody></table>
-<h2 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h2><h4 id="正则表达式（RegExp）的方法"><a href="#正则表达式（RegExp）的方法" class="headerlink" title="正则表达式（RegExp）的方法"></a>正则表达式（RegExp）的方法</h4><ul>
+<h2 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h2><h4 id="创建一个正则表达式"><a href="#创建一个正则表达式" class="headerlink" title="创建一个正则表达式"></a>创建一个正则表达式</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> reg = <span class="hljs-regexp">/\w+/</span>; <span class="hljs-comment">// 字面量</span><br><span class="hljs-comment">// 等价于</span><br><span class="hljs-keyword">var</span> reg = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">&#x27;\\w+&#x27;</span>); <span class="hljs-comment">// 构造函数的字符串参数 </span><br></code></pre></td></tr></table></figure>
+<p>注意：当使用构造函数创造正则对象时，需要常规的字符转义规则（也就是在转义字符前也要加反斜杠 <code>\</code>）。</p>
+<h4 id="正则表达式（RegExp）的方法"><a href="#正则表达式（RegExp）的方法" class="headerlink" title="正则表达式（RegExp）的方法"></a>正则表达式（RegExp）的方法</h4><ul>
 <li><p>test</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">/a/.test(<span class="hljs-string">&#x27;a&#x27;</span>); <span class="hljs-comment">// true</span><br>/a/.test(<span class="hljs-string">&#x27;b&#x27;</span>); <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure></li>
 <li><p>exec</p>
