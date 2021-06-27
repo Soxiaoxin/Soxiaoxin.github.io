@@ -177,8 +177,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-27 11:03" pubdate>
-        2021年6月27日 上午
+      <time datetime="2021-06-27 11:34" pubdate>
+        2021年6月27日 中午
       </time>
     </span>
   
@@ -268,7 +268,7 @@
 </ul>
 <h4 id="常见XSS防范方法"><a href="#常见XSS防范方法" class="headerlink" title="常见XSS防范方法"></a>常见XSS防范方法</h4><ul>
 <li>设置httpOnly：这样js脚本就无法获取cookie的信息了。</li>
-<li>设置黑名单，对不安全的输入进行过滤和转码，把<script>标签、javascript等字符过滤掉</li>
+<li>设置黑名单，对不安全的输入进行过滤和转码，把&lt;script&gt;标签、javascript等字符过滤掉</li>
 <li>设置白名单，只有符合相应格式的输入才能通过</li>
 <li>利用CSP，明确表示哪些外部资源是可以加载和执行的</li>
 </ul>
@@ -342,13 +342,6 @@
             <hr>
             <div>
               <div class="post-metas mb-3">
-                
-                  <div class="post-meta mr-3">
-                    <i class="iconfont icon-category"></i>
-                    
-                      <a class="hover-with-bg" href="/categories/%E5%AE%89%E5%85%A8/">安全</a>
-                    
-                  </div>
                 
                 
               </div>
